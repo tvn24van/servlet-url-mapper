@@ -1,10 +1,10 @@
 package com.kodgemisi.servlet_url_mapping;
 
 import com.kodgemisi.servlet_url_mapping.dynamic_parsing.ParsingTestCase;
+import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
