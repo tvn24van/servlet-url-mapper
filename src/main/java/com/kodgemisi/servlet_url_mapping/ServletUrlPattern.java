@@ -6,14 +6,15 @@
 
 package com.kodgemisi.servlet_url_mapping;
 
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServlet;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.LinkedHashSet;
 import java.util.regex.Matcher;
@@ -27,7 +28,7 @@ import java.util.regex.Matcher;
  * <h2>Registering URL patterns with a {@code requestHandler}</h2>
  *
  * <p>When you register url patterns <strong>with</strong> a {@code requestHandler} then you need to use
- * {@link #handle(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)} as follows:</p>
+ * {@link #handle(HttpServletRequest, HttpServletResponse)} as follows:</p>
  *
  * <blockquote><pre>
  * void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -41,9 +42,9 @@ import java.util.regex.Matcher;
  * }
  * </pre></blockquote>
  * <p>
- * When you call {@link #handle(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)} method, your matching
+ * When you call {@link #handle(HttpServletRequest, HttpServletResponse)} method, your matching
  * {@code requestHandler} method will be called. If there is no matching url mappings then {@code ServletUrl.NOT_FOUND} is returned.
- * You should check for {@code ServletUrl.NOT_FOUND} and send {@link javax.servlet.http.HttpServletResponse#SC_NOT_FOUND} manually.
+ * You should check for {@code ServletUrl.NOT_FOUND} and send {@link HttpServletResponse#SC_NOT_FOUND} manually.
  * <p>
  * <br>
  * <h2>Registering URL patterns without a {@code requestHandler}</h2>
@@ -105,7 +106,7 @@ public class ServletUrlPattern {
 	 * com.kodgemisi.servlet_url_mapping.ServletUrlPatternRegistrar}'s {@code get}, {@code post}, {@code put} etc. methods.
 	 * However when you want to manually check url mappings, for example in a Servlet Filter, you can use this method.</p>
 	 *
-	 * <p>This method is NOT thread-safe. Should only be called from a {@code constructor} or {@link javax.servlet.http.HttpServlet#init()} or called
+	 * <p>This method is NOT thread-safe. Should only be called from a {@code constructor} or {@link HttpServlet#init()} or called
 	 * in a synchronized block.</p>
 	 *
 	 * @param name           (optional, maybe null or empty) The name of your choice for this url pattern. This parameter is optional when using this
@@ -140,7 +141,7 @@ public class ServletUrlPattern {
 	 * com.kodgemisi.servlet_url_mapping.ServletUrlPatternRegistrar}'s {@code get}, {@code post}, {@code put} etc. methods.
 	 * However when you want to manually check url mappings, for example in a Servlet Filter, you can use this method.</p>
 	 *
-	 * <p>This method is NOT thread-safe. Should only be called from a {@code constructor} or {@link javax.servlet.http.HttpServlet#init()} or called
+	 * <p>This method is NOT thread-safe. Should only be called from a {@code constructor} or {@link HttpServlet#init()} or called
 	 * in a synchronized block.</p>
 	 *
 	 * @param requestHandler A lambda function or function reference which will be used as the handler of matching requests
@@ -191,7 +192,7 @@ public class ServletUrlPattern {
 	 *     }
 	 * </pre></blockquote>
 	 *
-	 * <p>This method is NOT thread-safe. Should only be called from a {@code constructor} or {@link javax.servlet.http.HttpServlet#init()} or called
+	 * <p>This method is NOT thread-safe. Should only be called from a {@code constructor} or {@link HttpServlet#init()} or called
 	 * in a synchronized block.</p>
 	 *
 	 * @param name       (mandatory) The name of your choice for this url pattern. This name will be used to check if the parsed {@link ServletUrl}
@@ -224,7 +225,7 @@ public class ServletUrlPattern {
 	/**
 	 * This method is thread-safe and intended to be used in Servlet's {@code doXxx} methods.
 	 *
-	 * @param url It should be {@link javax.servlet.http.HttpServletRequest#getPathInfo()}
+	 * @param url It should be {@link HttpServletRequest#getPathInfo()}
 	 * @return Copy of the matched {@code ServletUrl} or a special instance of ServletUrl whose name is {@link ServletUrl#NOT_FOUND_404}
 	 */
 	@NotNull
@@ -255,8 +256,8 @@ public class ServletUrlPattern {
 	/**
 	 * This method is thread-safe and intended to be used in Servlet's {@code doXxx} methods.
 	 *
-	 * @param request  {@link javax.servlet.http.HttpServletRequest}
-	 * @param response {@link javax.servlet.http.HttpServletResponse}
+	 * @param request  {@link HttpServletRequest}
+	 * @param response {@link HttpServletResponse}
 	 * @return Copy of the matched ServletUrl or a special instance of ServletUrl whose name is {@link ServletUrl#NOT_FOUND_404}
 	 * @throws IOException It might be thrown from
 	 * {@link com.kodgemisi.servlet_url_mapping.ServletRequestHandler#handleRequest}
@@ -292,7 +293,7 @@ public class ServletUrlPattern {
 	 * @param url url from {@code getPathInfo()}
 	 * @param patternHasTrailingSlash indicates if the pattern has a trailing slash
 	 * @return arranged url, never null
-	 * @see javax.servlet.http.HttpServletRequest#getPathInfo()
+	 * @see HttpServletRequest#getPathInfo()
 	 */
 	@NotNull
 	private String arrangeUrlForTrailingSlash(@Nullable String url, boolean patternHasTrailingSlash) {

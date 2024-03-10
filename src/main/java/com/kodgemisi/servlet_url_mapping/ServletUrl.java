@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
  * </p>
  *
  * @author destan
- * @see ServletUrlPattern#parse(javax.servlet.http.HttpServletRequest)
+ * @see ServletUrlPattern#parse(jakarta.servlet.http.HttpServletRequest)
  * @see ServletUrlPattern#register(String, String, Class[])
  */
 public class ServletUrl {
